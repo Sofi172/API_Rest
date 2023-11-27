@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear Vehículo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+
+  <body>
+    <div class="container" style="margin-top: 20px">
+      <h1>Crear Nuevo Vehículo</h1>
+      <form id="formularioVehiculo" action="/vehiculos" method="POST" novalidate onsubmit="return validarFormulario()">
+        <label for="tipo">Tipo:</label>
+        <input type="text" class="form-control" name="tipo" id="tipoVehiculo" required/>
+        <br/>
+        <label for="modelo">Modelo:</label>
+        <input type="number" class="form-control" name="modelo" required />
+        <br/>
+        <label for="marca">Marca:</label>
+        <input type="text" class="form-control" name="marca" required />
+        <br/>
+        <label for="placa">Placa:</label>
+        <input type="text" class="form-control" name="placa" id="placa" required onchange="validarPlacaOnChange(this.value)"
+        />
+        <br />
+        <!-- Agrega más campos según sea necesario -->
+        <br />
+        <button class="btn btn-primary" type="submit">Crear Vehículo</button>
+        <buttton class="btn btn-danger">
+          <a class="text-decoration-none link-light" href="/vehiculos">Atras</a>
+        </buttton>
+      </form>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+   
+    <!--Intento placa #2-->
+    <!--<script>
+    /*   async function validarPlaca(placa) {
+        try {
+          const response = await fetch(`/validar-placa/${placa}`);
+          if (response.ok) {
+            const data = await response.json();
+            return data; // Devuelve los datos de la respuesta
+          }
+        } catch (error) {
+          console.error("Error al validar la placa:", error);
+          return { error: "Error al validar la placa" };
+        }
+      }
+      async function validarPlacaOnChange(valor) {
+        const placaData = await validarPlaca(valor);
+
+     if (placaData.error) {
+          // Manejo de error al validar la placa
+          Swal.fire({
+            icon: "error",
+            title: "Error al validar la placa",
+            text: placaData.error,
+          });
+          return;
+        } 
+        if (placaData.existe) {
+          // La placa ya está registrada
+          Swal.fire({
+            icon: "error",
+            title: "Placa registrada",
+            text: "La placa ya está registrada. Por favor, ingresa una placa diferente.",
+          });
+          // Puedes hacer algo adicional aquí si la placa ya está registrada
+          return;
+        }
+
+        // Si la placa no está registrada, continuar con otras acciones (si es necesario)
+        // Por ejemplo, enviar el formulario
+      } 
+        async function placa(placa) {
+        try {
+          const response = await fetch(`/validar-placa/${placa}`);
+          if (response.ok) {
+            const data = await response.json();
+            return data.existe; // Devuelve true si la placa existe, de lo contrario, false
+          }
+          return false; // En caso de problemas con la respuesta del servidor
+        } catch (error) {
+          console.error('Error al validar la placa:', error);
+          return false;
+        }
+      }
+    
+      async function validarPlacaOnChange(valor) {
+        const placaExiste = await placa(valor);
+    
+        if (placaExiste) {
+          Swal.fire({
+            icon: "error",
+            title: "Placa registrada",
+            text: "La placa ya está registrada. Por favor, ingresa una placa diferente.",
+          });
+          // Puedes hacer algo adicional aquí si la placa ya está registrada
+        }
+      } */
+    </script>-->
+    <!--Intento placa#1-->
+    <!-- <script>
+         async function placa() {
+         try {
+    const response = await fetch(`/validar-placa/${placa}`);
+    if (response.ok) {
+      const data = await response.json();
+      return data.existe; // Devuelve true si la placa existe, de lo contrario, false
+    }
+    return false; // En caso de problemas con la respuesta del servidor
+  } catch (error) {
+    console.error('Error al validar la placa:', error);
+    return false;
+  }
+}
+    </script> -->
+    <!--Validacion campos vacios-->
+    <script>
+      function validarFormulario() {
+        var tipoVehiculo = document.getElementById("tipoVehiculo").value;
+        var modelo = document.getElementsByName("modelo")[0].value;
+        var marca = document.getElementsByName("marca")[0].value;
+        var placa = document.getElementsByName("placa")[0].value;
+
+        if (tipoVehiculo == "" || modelo == "" || marca == "" || placa == "") {
+          /* alert("Por favor, complete todos los campos requeridos."); */
+          Swal.fire({
+            icon: "error",
+            title: "Campos vacios",
+            text: "Debes completar los campos para continuar",
+          });
+          return false;
+        }
+        return true;
+      }
+    </script>
+
+    <!--<script src="../../Routes/validacionVehiculo.js"></script>-->
+  </body>
+</html>
